@@ -34,4 +34,4 @@ if __name__ == "__main__":
         react = str(sys.argv[1])
 
     print(react)
-    print(tffp.predict(react))
+    print((tffp.predict(react)))

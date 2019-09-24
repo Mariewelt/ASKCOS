@@ -33,7 +33,7 @@ v5  - requires that instance references be single-step, but they
      enforce that rerstriction during template application
 '''
 
-from __future__ import print_function
+
 from global_config import USE_STEREOCHEMISTRY
 import argparse
 from numpy.random import shuffle # for random selection
@@ -469,22 +469,22 @@ def get_special_groups(mol):
 
     # Define templates, based on Functional_Group_Hierarchy.txt from Greg Laandrum
     group_templates = [ 
-        (range(3), '[OH0,SH0]=C[O,Cl,I,Br,F]',), # carboxylic acid / halogen
-        (range(3), '[OH0,SH0]=CN',), # amide/sulfamide
-        (range(4), 'S(O)(O)[Cl]',), # sulfonyl chloride
-        (range(3), 'B(O)O',), # boronic acid/ester
-        (range(2), 'N#C',), # nitrile
-        (range(4), '[Si](C)(C)C'), # trialkyl silane
-        (range(3), '[N;H0;$(N-[#6]);D2]-,=[N;D2]-,=[N;D1]',), # azide
-        (range(8), 'O=C1N([Br,I,F,Cl])C(=O)CC1',), # NBS brominating agent
-        (range(2), 'C=C',), # alkene
+        (list(range(3)), '[OH0,SH0]=C[O,Cl,I,Br,F]',), # carboxylic acid / halogen
+        (list(range(3)), '[OH0,SH0]=CN',), # amide/sulfamide
+        (list(range(4)), 'S(O)(O)[Cl]',), # sulfonyl chloride
+        (list(range(3)), 'B(O)O',), # boronic acid/ester
+        (list(range(2)), 'N#C',), # nitrile
+        (list(range(4)), '[Si](C)(C)C'), # trialkyl silane
+        (list(range(3)), '[N;H0;$(N-[#6]);D2]-,=[N;D2]-,=[N;D1]',), # azide
+        (list(range(8)), 'O=C1N([Br,I,F,Cl])C(=O)CC1',), # NBS brominating agent
+        (list(range(2)), 'C=C',), # alkene
         ((2,), 'C=C-[*]',), # adj to alkene
         ((2,), 'O=C-[*]',), # adj to carbonyl
         ((3,), 'O=C([O,N])-[*]',), # adj to carboxylic acid/amide/ester
-        (range(4), 'ClS(Cl)=O',), # thionyl chloride
-        (range(2), '[Mg,Li][Br,Cl]',), # grinard (non-disassociated)
-        (range(3), 'S(O)(O)',), # SO2 group
-        (range(2), 'N~N',), # diazo
+        (list(range(4)), 'ClS(Cl)=O',), # thionyl chloride
+        (list(range(2)), '[Mg,Li][Br,Cl]',), # grinard (non-disassociated)
+        (list(range(3)), 'S(O)(O)',), # SO2 group
+        (list(range(2)), 'N~N',), # diazo
         ((1,), '[a!c]:a',), # adjacency to heteroatom in aromatic ring
         ((2,), '[a!c]:a:a',), # two-steps away from heteroatom in aromatic ring
         #((1,), 'c(-,=[*]):c([Cl,I,Br,F])',), # ortho to halogen on ring - too specific?
@@ -701,7 +701,7 @@ def process_an_example_doc(example_doc, test=False):
             print('ID: {}'.format(example_doc['_id']))
             print('retro_canonical: {}'.format(retro_canonical))
             print('original: {}'.format(example_doc['RXN_SMILES']))
-            if v: raw_input('Pausing...')
+            if v: input('Pausing...')
             return
 
         ###
@@ -872,7 +872,7 @@ if __name__ == '__main__':
     lg = RDLogger.logger()
     if not v: lg.setLevel(4)
 
-    clear = raw_input('Do you want to clear the {} existing templates? '.format(TRANSFORM_DB.find().count()))
+    clear = input('Do you want to clear the {} existing templates? '.format(TRANSFORM_DB.find().count()))
     if clear in ['y', 'Y', 'yes', '1', 'Yes']:
         result = TRANSFORM_DB.delete_many({})
         print('Cleared {} entries from collection'.format(result.deleted_count))

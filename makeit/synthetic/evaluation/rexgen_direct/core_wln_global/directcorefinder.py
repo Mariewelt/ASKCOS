@@ -83,7 +83,7 @@ class DirectCoreFinder():
     def predict(self, reactants_smi):
 
         bo_to_index  = {0.0: 0, 1.0:1, 2.0:2, 3.0:3, 1.5:4}
-        bindex_to_o = {val:key for key, val in bo_to_index.items()}
+        bindex_to_o = {val:key for key, val in list(bo_to_index.items())}
         nbos = len(bo_to_index)
 
         src_batch, edit_batch = [], []
@@ -102,7 +102,7 @@ class DirectCoreFinder():
         edit_batch.append('0-1-0.0') # dummy edits
 
         src_tuple = smiles2graph_batch(src_batch)
-        cur_bin, cur_label, sp_label = get_all_batch(zip(src_batch, edit_batch))
+        cur_bin, cur_label, sp_label = get_all_batch(list(zip(src_batch, edit_batch)))
         feed_map = {x:y for x,y in zip(self.src_holder, src_tuple)}
         feed_map.update({self.label:cur_label, self.binary:cur_bin})
 

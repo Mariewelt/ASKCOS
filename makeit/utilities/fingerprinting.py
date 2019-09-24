@@ -55,7 +55,7 @@ def create_rxn_Morgan2FP_separately(rsmi, psmi, rxnfpsize=gc.fingerprint_bits, p
         fp = np.empty(rxnfpsize, dtype='float32')
         DataStructs.ConvertToNumpyArray(fp_bit, fp)
     except Exception as e:
-        print("Cannot build reactant fp due to {}".format(e))
+        print(("Cannot build reactant fp due to {}".format(e)))
         return
     rfp = fp
 
@@ -69,7 +69,7 @@ def create_rxn_Morgan2FP_separately(rsmi, psmi, rxnfpsize=gc.fingerprint_bits, p
         fp = np.empty(pfpsize, dtype='float32')
         DataStructs.ConvertToNumpyArray(fp_bit, fp)
     except Exception as e:
-        print("Cannot build product fp due to {}".format(e))
+        print(("Cannot build product fp due to {}".format(e)))
         return
     pfp = fp
     return [pfp, rfp]
@@ -84,7 +84,7 @@ def get_condition_input_from_smiles(conditions_smiles, split=False, s_fp=256, r_
     conditions_mol = []
     inputlength = 0
     # If input is a single string: immediately extract molecule
-    if (type(conditions_smiles) is str) or (type(conditions_smiles) is unicode):
+    if (type(conditions_smiles) is str) or (type(conditions_smiles) is str):
         try:
             conditions_mol.append(
                 ('cond', Chem.MolFromSmiles(conditions_smiles)))

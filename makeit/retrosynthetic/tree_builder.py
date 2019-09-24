@@ -3,7 +3,7 @@ import makeit.global_config as gc
 from multiprocessing import Process, Manager, Queue
 import sys 
 if sys.version_info[0] < 3:
-    import Queue as VanillaQueue
+    import queue as VanillaQueue
 else:
     import queue as VanillaQueue
 import time
@@ -254,7 +254,7 @@ class TreeBuilder:
         else:
             def set_initial_target(smiles):
                 self.expansion_queues[-1].put((1, smiles))
-                print(self.expansion_queues)
+                print((self.expansion_queues))
                 print('Put something on expansion queue')
                 while self.results_queue.empty():
                     time.sleep(0.25)
@@ -516,7 +516,7 @@ class TreeBuilder:
                 elapsed_time = time.time() - start_time
             except Exception as e:
                 elapsed_time = time.time() - start_time
-                print('##ERROR#: {}'.format(e))
+                print(('##ERROR#: {}'.format(e)))
 
     def build_tree(self, target):
         """Recursively build out the synthesis tree
@@ -570,7 +570,7 @@ class TreeBuilder:
         num_chemicals = 0
         num_reactions = 0
         at_depth = {}
-        for _id in self.tree_dict.keys():
+        for _id in list(self.tree_dict.keys()):
             depth = self.tree_dict[_id]['depth']
             if depth % 1 == 0:
                 num_chemicals += 1
@@ -696,7 +696,7 @@ class TreeBuilder:
                 natom_dict[a.GetSymbol()] += 1
             natom_dict['H'] = sum(a.GetTotalNumHs() for a in mol.GetAtoms())
             max_natom_satisfied = all(natom_dict[k] <= v for (
-                k, v) in max_natom_dict.items() if k != 'logic')
+                k, v) in list(max_natom_dict.items()) if k != 'logic')
             return max_natom_satisfied
         def is_popular_enough(hist):
             return hist['as_reactant'] >= min_chemical_history_dict['as_reactant'] or \
@@ -902,6 +902,6 @@ if __name__ == '__main__':
                                         min_chemical_history_dict={'as_reactant':5, 'as_product':1, 'logic':'none'})
     print('done')
     print(status)
-    print(paths[0])
-    print(paths[1])
-    print(paths[2])
+    print((paths[0]))
+    print((paths[1]))
+    #print((paths[2]))

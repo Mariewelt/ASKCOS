@@ -4,7 +4,7 @@ from six.moves import cPickle as pickle
 
 def convert_pickled_bytes_2_to_3(data):
     if isinstance(data, bytes):  return data.decode()
-    if isinstance(data, dict):   return dict(map(convert_pickled_bytes_2_to_3, data.items()))
+    if isinstance(data, dict):   return dict(list(map(convert_pickled_bytes_2_to_3, list(data.items()))))
     if isinstance(data, tuple):  return tuple(map(convert_pickled_bytes_2_to_3, data))
     if isinstance(data, list):   return list(map(convert_pickled_bytes_2_to_3, data))
     return data

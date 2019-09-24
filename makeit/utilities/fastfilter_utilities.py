@@ -1,6 +1,6 @@
 
 #import files
-from __future__ import division
+
 
 import theano
 from theano.tensor import lt,le,eq,gt,ge
@@ -14,6 +14,7 @@ from keras.optimizers import SGD, Adam, Adadelta
 #import keras.engine.topology 
 from keras.engine.topology import Layer
 import os
+import imp
 
 
 
@@ -21,7 +22,7 @@ def set_keras_backend(backend):
 
     if K.backend() != backend:
         os.environ['KERAS_BACKEND'] = backend
-        reload(K)
+        imp.reload(K)
         assert K.backend() == backend
 
 class Highway_self(Layer):

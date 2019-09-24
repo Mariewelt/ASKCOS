@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import rdkit.Chem as Chem          
 from rdkit.Chem import AllChem
 import numpy as np
@@ -54,7 +54,7 @@ def average_template_list(INSTANCE_DB, CHEMICAL_DB, id_list):
 
 	# Solvents
 	solvent_string = ''
-	for (solxrn, count) in sorted(solvents.items(), key = lambda x: x[1], reverse = True)[:5]:
+	for (solxrn, count) in sorted(list(solvents.items()), key = lambda x: x[1], reverse = True)[:5]:
 		doc = CHEMICAL_DB.find_one({'_id': solxrn}, ['SMILES', 'IDE_CN'])
 		cn = doc['IDE_CN'] if doc else solxrn
 		solvent_string += '{} ({:.0f}%); '.format(cn, count*100.0/N_id)
@@ -62,7 +62,7 @@ def average_template_list(INSTANCE_DB, CHEMICAL_DB, id_list):
 
 	# Reagents
 	reagent_string = ''
-	for (rgtxrn, count) in sorted(reagents.items(), key = lambda x: x[1], reverse = True)[:5]:
+	for (rgtxrn, count) in sorted(list(reagents.items()), key = lambda x: x[1], reverse = True)[:5]:
 		doc = CHEMICAL_DB.find_one({'_id': rgtxrn}, ['SMILES', 'IDE_CN'])
 		cn = doc['IDE_CN'] if doc else rgtxrn
 		reagent_string += '{} ({:.0f}%); '.format(cn, count*100.0/N_id)
@@ -70,7 +70,7 @@ def average_template_list(INSTANCE_DB, CHEMICAL_DB, id_list):
 
 	# Catalysts
 	catalyst_string = ''
-	for (catxrn, count) in sorted(catalysts.items(), key = lambda x: x[1], reverse = True)[:5]:
+	for (catxrn, count) in sorted(list(catalysts.items()), key = lambda x: x[1], reverse = True)[:5]:
 		doc = CHEMICAL_DB.find_one({'_id': catxrn}, ['SMILES', 'IDE_CN'])
 		cn = doc['IDE_CN'] if doc else catxrn
 		catalyst_string += '{} ({:.0f}%); '.format(cn, count*100.0/N_id)

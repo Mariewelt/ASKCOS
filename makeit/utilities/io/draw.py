@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 import numpy as np
 import rdkit.Chem as Chem
 import rdkit.Chem.AllChem as AllChem

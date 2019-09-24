@@ -12,7 +12,7 @@ def batch_normalization(x, scope, decay=0.999, eps=1e-6, training=True):
         mean = tf.get_variable("mean", [fdim], tf.float32, tf.constant_initializer(0.0), trainable=False)
         var = tf.get_variable("variance", [fdim], tf.float32, tf.constant_initializer(1.0), trainable=False)
         if training:
-            x_mean, x_var = tf.nn.moments(x, range(ndim - 1))
+            x_mean, x_var = tf.nn.moments(x, list(range(ndim - 1)))
             avg_mean = tf.assign(mean, mean * decay + x_mean * (1.0 - decay))
             avg_var = tf.assign(var, var * decay + x_var * (1.0 - decay))
             with tf.control_dependencies([avg_mean, avg_var]):

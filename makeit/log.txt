@@ -1,0 +1,42 @@
+INFO@chemhistorian       : [1568999313.343s]	Loading chemhistorian from file...
+INFO@model_loader        : [1568999412.080s]	Loading retro synthetic template database...
+INFO@retro_transformer   : [1568999412.081s]	Loading retro-synthetic transformer, including all templates with more than 25 hits (10 for chiral reactions)
+INFO@template_transformer: [1568999412.082s]	Loading templates from /home/mpopova/Work/ASKCOS3/makeit/data/local_db_dumps/retrotransformer_chiral_using_reaxys_v2-transforms_retro_v9_mincount25_mincountchiral10.pkl
+INFO@template_transformer: [1568999513.691s]	Loaded templates. Using 61142 templates
+INFO@retro_transformer   : [1568999513.743s]	Retrosynthetic transformer has been loaded - using 61142 templates.
+INFO@model_loader        : [1568999513.743s]	Retro synthetic transformer loaded.
+WARN@tree_builder        : [1568999808.374s]	Starting to expand C using max_natom_dict defaultdict(<function TreeBuilder.<lambda> at 0x7f435261d620>, {'logic': None}), min_history {'logic': 'none', 'as_reactant': 5, 'as_product': 1}
+INFO@tree_builder        : [1568999808.656s]	Tree builder spinning off 2 child processes
+INFO@fast_filter         : [1568999808.878s]	Starting to load fast filter
+INFO@fast_filter         : [1568999819.499s]	Done loading fast filter
+INFO@tree_builder        : [1569279198.734s]	Terminating tree building process.
+INFO@tree_builder        : [1569279198.735s]	All tree building processes done.
+INFO@chemhistorian       : [1569284282.903s]	Loading chemhistorian from file...
+INFO@model_loader        : [1569284383.069s]	Loading retro synthetic template database...
+INFO@retro_transformer   : [1569284383.070s]	Loading retro-synthetic transformer, including all templates with more than 25 hits (10 for chiral reactions)
+INFO@template_transformer: [1569284383.070s]	Loading templates from /home/mpopova/Work/ASKCOS3/makeit/data/local_db_dumps/retrotransformer_chiral_using_reaxys_v2-transforms_retro_v9_mincount25_mincountchiral10.pkl
+INFO@chemhistorian       : [1569284686.737s]	Loading chemhistorian from file...
+INFO@model_loader        : [1569284766.345s]	Loading retro synthetic template database...
+INFO@retro_transformer   : [1569284766.347s]	Loading retro-synthetic transformer, including all templates with more than 25 hits (10 for chiral reactions)
+INFO@template_transformer: [1569284766.347s]	Loading templates from /home/mpopova/Work/ASKCOS3/makeit/data/local_db_dumps/retrotransformer_chiral_using_reaxys_v2-transforms_retro_v9_mincount25_mincountchiral10.pkl
+INFO@template_transformer: [1569284870.418s]	Loaded templates. Using 61142 templates
+INFO@retro_transformer   : [1569284870.488s]	Retrosynthetic transformer has been loaded - using 61142 templates.
+INFO@model_loader        : [1569284870.488s]	Retro synthetic transformer loaded.
+WARN@tree_builder        : [1569284903.171s]	Starting to expand B=C(OC1CCC(C)CNC1=O)c1ccc(C(=O)O)NC(=O)CCn2nnc(c2NC2CCCCC2)-c2cc(N(=O)=O)ccc12 using max_natom_dict defaultdict(<function TreeBuilder.<lambda> at 0x7f8a36398a60>, {'logic': None}), min_history {'as_reactant': 5, 'as_product': 1, 'logic': 'none'}
+INFO@tree_builder        : [1569284903.496s]	Tree builder spinning off 2 child processes
+INFO@fast_filter         : [1569284903.765s]	Starting to load fast filter
+INFO@fast_filter         : [1569284914.564s]	Done loading fast filter
+INFO@tree_builder        : [1569285285.950s]	Terminating tree building process.
+INFO@tree_builder        : [1569285285.951s]	All tree building processes done.
+WARN@tree_builder        : [1569285361.075s]	Starting to expand B=C(OC1CCC(C)CNC1=O)c1ccc(C(=O)O)NC(=O)CCn2nnc(c2NC2CCCCC2)-c2cc(N(=O)=O)ccc12 using max_natom_dict defaultdict(<function TreeBuilder.<lambda> at 0x7f8a36398a60>, {'logic': None}), min_history {'as_reactant': 5, 'as_product': 1, 'logic': 'none'}
+INFO@tree_builder        : [1569285361.233s]	Tree builder spinning off 2 child processes
+INFO@fast_filter         : [1569285361.496s]	Starting to load fast filter
+INFO@fast_filter         : [1569285372.060s]	Done loading fast filter
+INFO@tree_builder        : [1569285380.656s]	Terminating tree building process.
+INFO@tree_builder        : [1569285380.657s]	All tree building processes done.
+WARN@tree_builder        : [1569285641.108s]	Starting to expand B=C(OC1CCC(C)CNC1=O)c1ccc(C(=O)O)NC(=O)CCn2nnc(c2NC2CCCCC2)-c2cc(N(=O)=O)ccc12 using max_natom_dict defaultdict(<function TreeBuilder.<lambda> at 0x7f8a36398a60>, {'logic': None}), min_history {'as_reactant': 5, 'as_product': 1, 'logic': 'none'}
+INFO@tree_builder        : [1569285641.263s]	Tree builder spinning off 2 child processes
+INFO@fast_filter         : [1569285641.528s]	Starting to load fast filter
+INFO@fast_filter         : [1569285651.981s]	Done loading fast filter
+INFO@tree_builder        : [1569285789.696s]	Terminating tree building process.
+INFO@tree_builder        : [1569285789.697s]	All tree building processes done.

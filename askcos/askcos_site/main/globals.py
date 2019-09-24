@@ -29,7 +29,7 @@ RETRO_CHIRAL_FOOTNOTE = 'Using {} chiral retrosynthesis templates (mincount {} i
 RetroTransformer.templates += RetroTransformerChiral.templates[:]
 del RetroTransformerChiral
 print('Merged two retrotransformers into one, since this is just for template look-up')
-print('{} total templates available'.format(len(RetroTransformer.templates)))
+print(('{} total templates available'.format(len(RetroTransformer.templates))))
 RetroTransformer.reorder() # rebuilds id->template dictionary
 
 ### Forward transformer 
@@ -101,7 +101,7 @@ from makeit.prioritization.precursors.scscore import SCScorePrecursorPrioritizer
 scscorer = SCScorePrecursorPrioritizer()
 scscorer.load_model(model_tag='1024bool')
 print('Loaded SCScorer on website')
-print(scscorer.get_score_from_smiles('CCCC', noprice=True))
+print((scscorer.get_score_from_smiles('CCCC', noprice=True)))
 
 
 # Solvent choices - the save file is created by the template-based forward predictor
@@ -111,7 +111,7 @@ file_path = get_abraham_solvents_path()
 if os.path.isfile(file_path):
     with open(file_path, 'rb') as fid:
         solvent_name_to_smiles = pickle.load(fid)
-    solvent_choices = [{'smiles': v, 'name': k} for (k, v) in solvent_name_to_smiles.items()]
+    solvent_choices = [{'smiles': v, 'name': k} for (k, v) in list(solvent_name_to_smiles.items())]
 else:
     db_client = MongoClient(gc.MONGO['path'], gc.MONGO[
                     'id'], connect=gc.MONGO['connect'])

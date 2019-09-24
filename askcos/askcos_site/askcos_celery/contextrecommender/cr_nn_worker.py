@@ -5,7 +5,7 @@ load a pre-trained nearest neighbor model. For each request, this worker
 must query the database to get details about the instance.
 '''
 
-from __future__ import absolute_import, unicode_literals, print_function
+
 from django.conf import settings
 from celery import shared_task
 from celery.signals import celeryd_init

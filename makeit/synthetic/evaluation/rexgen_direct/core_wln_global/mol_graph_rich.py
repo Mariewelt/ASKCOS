@@ -14,7 +14,7 @@ max_nb = 10
 def onek_encoding_unk(x, allowable_set):
     if x not in allowable_set:
         x = allowable_set[-1]
-    return list(map(lambda s: x == s, allowable_set))
+    return list([x == s for s in allowable_set])
 
 def atom_features(atom):
     attributes = onek_encoding_unk(atom.GetSymbol(), elem_list) \
@@ -135,8 +135,8 @@ def get_mask(arr_list):
     return a
 
 def smiles2graph_list(smiles_list, idxfunc=lambda x:x.GetIdx()):
-    res = list(map(lambda x:smiles2graph(x,idxfunc), smiles_list))
-    fatom_list, fbond_list, gatom_list, gbond_list, nb_list = zip(*res)
+    res = list([smiles2graph(x,idxfunc) for x in smiles_list])
+    fatom_list, fbond_list, gatom_list, gbond_list, nb_list = list(zip(*res))
     return pack2D(fatom_list), pack2D(fbond_list), pack2D_withidx(gatom_list), pack2D_withidx(gbond_list), pack1D(nb_list), get_mask(fatom_list)
 
 m = Chem.MolFromSmiles('CC')

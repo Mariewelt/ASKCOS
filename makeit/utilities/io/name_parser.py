@@ -1,6 +1,6 @@
 import sys 
 if sys.version_info[0] < 3:
-    from urllib2 import urlopen 
+    from urllib.request import urlopen 
 else:
     from urllib.request import urlopen
 import rdkit.Chem as Chem

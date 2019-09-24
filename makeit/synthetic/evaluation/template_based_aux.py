@@ -439,10 +439,10 @@ def get_data(max_N_c = None, shuffle = False):
     N_train = int(N_samples * split_ratio[0])
     N_val = int(N_samples * split_ratio[1])
     N_test = N_samples - N_train - N_val
-    print('Total number of samples: {}'.format(N_samples))
-    print('Training   on {}% - {}'.format(split_ratio[0]*100, N_train))
-    print('Validating on {}% - {}'.format(split_ratio[1]*100, N_val))
-    print('Testing    on {}% - {}'.format((1-split_ratio[1]-split_ratio[0])*100, N_test))
+    print(('Total number of samples: {}'.format(N_samples)))
+    print(('Training   on {}% - {}'.format(split_ratio[0]*100, N_train)))
+    print(('Validating on {}% - {}'.format(split_ratio[1]*100, N_val)))
+    print(('Testing    on {}% - {}'.format((1-split_ratio[1]-split_ratio[0])*100, N_test)))
 
     return {
         'N_samples': N_samples,
@@ -508,7 +508,7 @@ def test(model, data):
 
     def test_on_set(fid, dataset, data_generator, label_generator, num_batches):
         '''Helper function that works for both training and validation sets'''
-        print('Testing on {} data'.format(dataset))
+        print(('Testing on {} data'.format(dataset)))
         # Need to process data using generator
 
         our_preds = []
@@ -516,8 +516,8 @@ def test(model, data):
         corr = 0
 
         for batch_num in range(num_batches):
-            (x, y) = data_generator.next()
-            labels = label_generator.next()
+            (x, y) = next(data_generator)
+            labels = next(label_generator)
             y = y[0] # only one output, which is True/False or yield
         
             # TODO: pre-fetch data in queue
@@ -737,7 +737,7 @@ if __name__ == '__main__':
 
     if bool(args.retrain):
         print('Reloading from file')
-        rebuild = raw_input('Do you want to rebuild from scratch instead of loading from file? [n/y] ')
+        rebuild = input('Do you want to rebuild from scratch instead of loading from file? [n/y] ')
         if rebuild == 'y':
             model = build(F_atom = F_atom, F_bond = F_bond, N_h1 = N_h1, 
                 N_h2 = N_h2, N_h3 = N_h3, N_hf = N_hf, l2v = l2v, lr = lr, optimizer = opt, inner_act = inner_act,
@@ -773,8 +773,8 @@ if __name__ == '__main__':
         label_generator = data['test_label_generator']
         ex = 0
         while True:
-            (x, y) = data_generator.next()
-            labels = label_generator.next()
+            (x, y) = next(data_generator)
+            labels = next(label_generator)
 
             z = model.predict(x)
 
@@ -789,7 +789,7 @@ if __name__ == '__main__':
             with open(os.path.join(FROOT, 'ex{}.info'.format(ex)), 'w') as fid:
                 fid.write('{}'.format(labels))
             ex += 1
-            raw_input('Pause...')
+            input('Pause...')
     
         quit(1)
 

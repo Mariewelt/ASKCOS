@@ -106,7 +106,7 @@ def initialize_rxn_from_smarts(reaction_smarts):
             if not a.HasProp('molAtomMapNumber'):
                 a.SetIntProp('molAtomMapNumber', unmapped)
                 unmapped += 1
-    if PLEVEL >= 2: print('Added {} map nums to unmapped reactants'.format(unmapped-700))
+    if PLEVEL >= 2: print(('Added {} map nums to unmapped reactants'.format(unmapped-700)))
     if unmapped > 800:
         raise ValueError('Why do you have so many unmapped atoms in the template reactants?')
 

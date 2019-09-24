@@ -4,8 +4,8 @@ from .globals import CHEMICAL_DB
 import rdkit.Chem as Chem
 import sys
 if sys.version_info[0] < 3:
-    from urllib2 import urlopen
-    from urllib2 import HTTPError
+    from urllib.request import urlopen
+    from urllib.error import HTTPError
 else:
     from urllib.request import urlopen
     from urllib.error import HTTPError

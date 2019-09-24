@@ -17,11 +17,11 @@ def ajax_smiles_to_image(request):
     and returns the HTML for embedding an image'''
 
     smiles = request.GET.get('smiles', None)
-    print('SMILES from Ajax: {}'.format(smiles))
+    print(('SMILES from Ajax: {}'.format(smiles)))
     smiles = resolve_smiles(smiles)
     if smiles is None:
         return JsonResponse({'err': True})
-    print('Resolved smiles -> {}'.format(smiles))
+    print(('Resolved smiles -> {}'.format(smiles)))
 
     url = reverse('draw_smiles', kwargs={'smiles': smiles})
     data = {
@@ -42,7 +42,7 @@ def ajax_rxn_to_image(request):
     reactants = resolve_smiles(reactants)
     product = resolve_smiles(product)
     smiles = reactants + '>>' + product
-    print('RXN SMILES from Ajax: {}'.format(smiles))
+    print(('RXN SMILES from Ajax: {}'.format(smiles)))
     url = reverse('draw_reaction', kwargs={'smiles': smiles})
     data = {
         'html': '<img src="' + url + '">',

@@ -217,7 +217,7 @@ def atom_dftb(mol, v = False, to_file = False):
             print([(a.GetIdx(), a.GetSymbol(), a.GetProp(chargelabel), a.GetProp(Hchargelabel)) for a in mol.GetAtoms()])
 
             print('Energy:')
-            print(mol.GetProp(energylabel))
+            print((mol.GetProp(energylabel)))
 
 
     # Now perform molecule-level calculations
@@ -298,7 +298,7 @@ def atom_dftb(mol, v = False, to_file = False):
 if __name__ == '__main__':
 
     while True:
-        smiles = raw_input('Enter smiles: ')
+        smiles = input('Enter smiles: ')
         mol = Chem.MolFromSmiles(smiles)
         if not mol: continue 
 

@@ -45,7 +45,7 @@ v9 - more special groups, filter by maximum number of product atoms, filter
     Also, includes all unmapped atoms from reactants (fully specifies LGs)
 '''
 
-from __future__ import print_function
+
 USE_STEREOCHEMISTRY = True
 import argparse
 from numpy.random import shuffle # for random selection
@@ -666,28 +666,28 @@ def get_special_groups(mol):
 
     # Define templates, based on Functional_Group_Hierarchy.txt from Greg Laandrum
     group_templates = [ 
-        (range(3), '[OH0,SH0]=C[O,Cl,I,Br,F]',), # carboxylic acid / halogen
-        (range(3), '[OH0,SH0]=CN',), # amide/sulfamide
-        (range(4), 'S(O)(O)[Cl]',), # sulfonyl chloride
-        (range(3), 'B(O)O',), # boronic acid/ester
+        (list(range(3)), '[OH0,SH0]=C[O,Cl,I,Br,F]',), # carboxylic acid / halogen
+        (list(range(3)), '[OH0,SH0]=CN',), # amide/sulfamide
+        (list(range(4)), 'S(O)(O)[Cl]',), # sulfonyl chloride
+        (list(range(3)), 'B(O)O',), # boronic acid/ester
         ((0,), '[Si](C)(C)C'), # trialkyl silane
         ((0,), '[Si](OC)(OC)(OC)'), # trialkoxy silane, default to methyl
-        (range(3), '[N;H0;$(N-[#6]);D2]-,=[N;D2]-,=[N;D1]',), # azide
-        (range(8), 'O=C1N([Br,I,F,Cl])C(=O)CC1',), # NBS brominating agent
-        (range(11), 'Cc1ccc(S(=O)(=O)O)cc1'), # Tosyl
+        (list(range(3)), '[N;H0;$(N-[#6]);D2]-,=[N;D2]-,=[N;D1]',), # azide
+        (list(range(8)), 'O=C1N([Br,I,F,Cl])C(=O)CC1',), # NBS brominating agent
+        (list(range(11)), 'Cc1ccc(S(=O)(=O)O)cc1'), # Tosyl
         ((7,), 'CC(C)(C)OC(=O)[N]'), # N(boc)
         ((4,), '[CH3][CH0]([CH3])([CH3])O'), # 
-        (range(2), '[C,N]=[C,N]',), # alkene/imine
-        (range(2), '[C,N]#[C,N]',), # alkyne/nitrile
+        (list(range(2)), '[C,N]=[C,N]',), # alkene/imine
+        (list(range(2)), '[C,N]#[C,N]',), # alkyne/nitrile
         ((2,), 'C=C-[*]',), # adj to alkene
         ((2,), 'C#C-[*]',), # adj to alkyne
         ((2,), 'O=C-[*]',), # adj to carbonyl
         ((3,), 'O=C([CH3])-[*]'), # adj to methyl ketone
         ((3,), 'O=C([O,N])-[*]',), # adj to carboxylic acid/amide/ester
-        (range(4), 'ClS(Cl)=O',), # thionyl chloride
-        (range(2), '[Mg,Li,Zn,Sn][Br,Cl,I,F]',), # grinard/metal (non-disassociated)
-        (range(3), 'S(O)(O)',), # SO2 group
-        (range(2), 'N~N',), # diazo
+        (list(range(4)), 'ClS(Cl)=O',), # thionyl chloride
+        (list(range(2)), '[Mg,Li,Zn,Sn][Br,Cl,I,F]',), # grinard/metal (non-disassociated)
+        (list(range(3)), 'S(O)(O)',), # SO2 group
+        (list(range(2)), 'N~N',), # diazo
         ((1,), '[!#6;R]@[#6;R]',), # adjacency to heteroatom in ring
         ((2,), '[a!c]:a:a',), # two-steps away from heteroatom in aromatic ring
         #((1,), 'c(-,=[*]):c([Cl,I,Br,F])',), # ortho to halogen on ring - too specific?
@@ -947,7 +947,7 @@ def process_an_example_doc(example_doc, test=False):
             print('ID: {}'.format(example_doc['_id']))
             print('retro_canonical: {}'.format(retro_canonical))
             print('original: {}'.format(example_doc['RXN_SMILES']))
-            if v: raw_input('Pausing...')
+            if v: input('Pausing...')
             return
 
         ###
@@ -1126,7 +1126,7 @@ if __name__ == '__main__':
     lg = RDLogger.logger()
     if not v: lg.setLevel(4)
 
-    clear = raw_input('Do you want to clear the {} existing templates? '.format(TRANSFORM_DB.find().count()))
+    clear = input('Do you want to clear the {} existing templates? '.format(TRANSFORM_DB.find().count()))
     if clear in ['y', 'Y', 'yes', '1', 'Yes']:
         result = TRANSFORM_DB.delete_many({})
         print('Cleared {} entries from collection'.format(result.deleted_count))

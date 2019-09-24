@@ -81,7 +81,7 @@ def ajax_validate_temperature_synth(request):
     data = {'err': False}
 
     temperature = request.GET.get('temperature', None)
-    print('temperature from Ajax: {}'.format(temperature))
+    print(('temperature from Ajax: {}'.format(temperature)))
 
     try:
         temperature = float(temperature)
@@ -104,13 +104,13 @@ def ajax_start_synth(request):
     maxreturn = int(request.GET.get('maxreturn', 100))
     forward_scorer = request.GET.get('forward_scorer', 'Template_Free')
     print('Conditions for forward synthesis:')
-    print('reactants: {}'.format(reactants))
-    print('solvent: {}'.format(solvent))
-    print('temp: {}'.format(temperature))
-    print('reagents: {}'.format(reagents))
-    print('mincount: {}'.format(mincount))
-    print('max return: {}'.format(maxreturn))
-    print('forward scorer: {}'.format(forward_scorer))
+    print(('reactants: {}'.format(reactants)))
+    print(('solvent: {}'.format(solvent)))
+    print(('temp: {}'.format(temperature)))
+    print(('reagents: {}'.format(reagents)))
+    print(('mincount: {}'.format(mincount)))
+    print(('max return: {}'.format(maxreturn)))
+    print(('forward scorer: {}'.format(forward_scorer)))
 
     startTime = time.time()
 
@@ -125,7 +125,7 @@ def ajax_start_synth(request):
         forward_scorer=forward_scorer, top_n=maxreturn, return_all_outcomes=True)
     outcomes = res.get(300)[0]['outcomes']
 
-    print('Got top outcomes, length {}'.format(len(outcomes)))
+    print(('Got top outcomes, length {}'.format(len(outcomes))))
     #print(outcomes)
     data['html_time'] = '{:.3f} seconds elapsed'.format(time.time() - startTime)
 

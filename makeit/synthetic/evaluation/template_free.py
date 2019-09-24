@@ -85,7 +85,7 @@ class TemplateFreeNeuralNetScorer(Scorer):
                     }
 
             # Renormalize and re-rank
-            outcomes = sorted(outcomes_to_ret.values(), key=lambda x: x['prob'], reverse=True)
+            outcomes = sorted(list(outcomes_to_ret.values()), key=lambda x: x['prob'], reverse=True)
             total_prob = sum([outcome['prob'] for outcome in outcomes])
             for i, outcome in enumerate(outcomes):
                 outcomes[i]['rank'] = i + 1
@@ -106,5 +106,5 @@ if __name__ == '__main__':
     scorer = TemplateFreeNeuralNetScorer()
     res = scorer.evaluate(react)
     for re in res[0]:
-        print(re['outcome']['smiles'] + " {}".format(re['prob']))
+        print((re['outcome']['smiles'] + " {}".format(re['prob'])))
     print('done!')

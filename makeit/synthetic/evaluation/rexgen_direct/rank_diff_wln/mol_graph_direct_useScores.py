@@ -14,7 +14,7 @@ max_nb = 10
 def onek_encoding_unk(x, allowable_set):
     if x not in allowable_set:
         x = allowable_set[-1]
-    return list(map(lambda s: x == s, allowable_set))
+    return list([x == s for s in allowable_set])
 
 def atom_features(atom):
     return np.array(onek_encoding_unk(atom.GetSymbol(), elem_list) 
@@ -254,7 +254,7 @@ def smiles2graph(rsmiles, psmiles, core_bonds, gold_bonds, cutoff=500,
 
     # N choose k combinatorics
     # up to 4 bond changes at once - only 0.19% of train examples have 5 bonds changed, we can take the hit...
-    core_bonds_i = range(len(core_bonds))
+    core_bonds_i = list(range(len(core_bonds)))
     for k in range(1, kmax+1):
         for bond_change_combo_i in combinations(core_bonds_i, k):
             # Check if connected
@@ -317,8 +317,8 @@ def smiles2graph(rsmiles, psmiles, core_bonds, gold_bonds, cutoff=500,
             core_configs = new_core_configs
 
         else:
-            print('\nwarning! could not recover true smiles from gbonds: {}'.format(psmiles))
-            print('{}    {}'.format(rsmiles, gold_bonds))
+            print(('\nwarning! could not recover true smiles from gbonds: {}'.format(psmiles)))
+            print(('{}    {}'.format(rsmiles, gold_bonds)))
 
     # print('After removing duplicates, {} core configs'.format(len(core_configs)))
 
@@ -475,11 +475,11 @@ if __name__ == "__main__":
                 print(core_bonds)
 
             if tot % 10 == 0:
-                print('\nAfter {} processed'.format(tot))
-                print('Total processed: {}'.format(tot))
-                print('Coverage of true product: {}'.format(float(tot_found) / tot))
-                print('Average number of cands: {}'.format(float(tot_candidates) / tot))
-                print('Coverage from initial cand list, before filters: {}'.format(float(tot_found_prefilter) / tot))
+                print(('\nAfter {} processed'.format(tot)))
+                print(('Total processed: {}'.format(tot)))
+                print(('Coverage of true product: {}'.format(float(tot_found) / tot)))
+                print(('Average number of cands: {}'.format(float(tot_candidates) / tot)))
+                print(('Coverage from initial cand list, before filters: {}'.format(float(tot_found_prefilter) / tot)))
 
             # if ctr >= 10:
             #     break
@@ -497,9 +497,9 @@ if __name__ == "__main__":
         # pr.print_stats()
 
         if tot:
-            print('Total processed: {}'.format(tot))
-            print('Coverage of true product: {}'.format(float(tot_found)/tot))
-            print('Average number of cands: {}'.format(float(tot_candidates)/tot))
+            print(('Total processed: {}'.format(tot)))
+            print(('Coverage of true product: {}'.format(float(tot_found)/tot)))
+            print(('Average number of cands: {}'.format(float(tot_candidates)/tot)))
 
         fid1.close()
         fid2.close()

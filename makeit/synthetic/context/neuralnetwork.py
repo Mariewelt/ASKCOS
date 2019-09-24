@@ -162,8 +162,8 @@ class NeuralNetContextRecommender(ContextRecommender):
 
             # MyLogger.print_and_log('Failed for reaction {} because {}. Returning None.'.format(
             #     rxn, e), contextRecommender_loc, level=2)
-            print('Failed for reaction {} because {}. Returning None.'.format(
-                rxn, e), contextRecommender_loc)
+            print(('Failed for reaction {} because {}. Returning None.'.format(
+                rxn, e), contextRecommender_loc))
             return [[]]
 
     def path_condition(self, n, path):
@@ -352,5 +352,5 @@ if __name__ == '__main__':
 
     cont.load_nn_model(model_path=gc.NEURALNET_CONTEXT_REC['model_path'], info_path=gc.NEURALNET_CONTEXT_REC[
                        'info_path'], weights_path=gc.NEURALNET_CONTEXT_REC['weights_path'])
-    print(cont.get_n_conditions('CC1(C)OBOC1(C)C.Cc1ccc(Br)cc1>>Cc1cccc(B2OC(C)(C)C(C)(C)O2)c1', 10, with_smiles=False, return_scores=True))
+    print((cont.get_n_conditions('CC1(C)OBOC1(C)C.Cc1ccc(Br)cc1>>Cc1cccc(B2OC(C)(C)C(C)(C)O2)c1', 10, with_smiles=False, return_scores=True)))
 

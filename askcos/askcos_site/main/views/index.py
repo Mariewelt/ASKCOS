@@ -5,7 +5,7 @@ def index(request, err=None):
     '''
     Homepage
     '''
-    print('{} loaded the index page!'.format(request.user))
+    print(('{} loaded the index page!'.format(request.user)))
     return render(request, 'index.html', {'err': err})
 
 #@login_required

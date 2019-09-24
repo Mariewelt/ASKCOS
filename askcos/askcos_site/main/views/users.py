@@ -23,8 +23,8 @@ def can_avoid_banned_chemicals(request):
 def log_this_request(method):
     def f(*args, **kwargs):
         try:
-            print('User %s requested view %s with args %r and kwargs %r' % \
-                args[0].user.get_username(), method.__name__, args, kwargs)
+            print(('User %s requested view %s with args %r and kwargs %r' % \
+                args[0].user.get_username(), method.__name__, args, kwargs))
         except Exception as e:
             print(e)
         return method(*args, **kwargs)
@@ -89,16 +89,16 @@ def ajax_user_save_page(request):
                 fid.write(html.encode('utf8'))
             else:
                 fid.write(html)
-        print('Wrote to {}'.format(fpath))
+        print(('Wrote to {}'.format(fpath)))
         obj = SavedResults.objects.create(user=request.user, 
             description=desc,
             dt=dt,
             created=now,
             fpath=fpath)
-        print('Created saved object {}'.format(obj.id))
+        print(('Created saved object {}'.format(obj.id)))
     except Exception as e:
         print(e)
-        print('Could not write to file {}?'.format(fpath))
+        print(('Could not write to file {}?'.format(fpath)))
         return JsonResponse({'err': 'Could not write to file {}?'.format(fpath)})
 
     return JsonResponse({'err': False})
@@ -131,7 +131,7 @@ def ajax_user_blacklist_reaction(request):
         created=datetime.now(),
         smiles=smiles,
         active=True)
-    print('Created blacklisted reaction object {}'.format(obj.id))
+    print(('Created blacklisted reaction object {}'.format(obj.id)))
     return JsonResponse({'err': False})
 
 @login_required 
@@ -185,7 +185,7 @@ def ajax_user_blacklist_chemical(request):
         created=datetime.now(),
         smiles=smiles,
         active=True)
-    print('Created blacklisted chemical object {}'.format(obj.id))
+    print(('Created blacklisted chemical object {}'.format(obj.id)))
     return JsonResponse({'err': False})
 
 @login_required 

@@ -55,7 +55,7 @@ def check_smiles(chemical, chemicals):
     #make spaces readable in url
     trivial_name = trivial_name.replace(' ','%20')
     try:
-        smiles_from_name = urllib2.urlopen('https://cactus.nci.nih.gov/chemical/structure/{}/smiles'.format(trivial_name)).read()
+        smiles_from_name = urllib.request.urlopen('https://cactus.nci.nih.gov/chemical/structure/{}/smiles'.format(trivial_name)).read()
     except Exception as e:
         pass 
 
@@ -68,9 +68,9 @@ def check_smiles(chemical, chemicals):
         return
     
     if(recorded_can_smiles != can_smiles_from_name):
-        print('Chemical "{}" with reaxys id {}:'.format(trivial_name.replace('%20',' '), chemical['_id']))
-        print('Recorded smiles: {}'.format(recorded_can_smiles))
-        print('Smiles from recorded name: {}'.format(can_smiles_from_name))
+        print(('Chemical "{}" with reaxys id {}:'.format(trivial_name.replace('%20',' '), chemical['_id'])))
+        print(('Recorded smiles: {}'.format(recorded_can_smiles)))
+        print(('Smiles from recorded name: {}'.format(can_smiles_from_name)))
         ans = None
         while not ans:
             #ans = raw_input('Should the recorded smiles be overwritten by smiles from recorded name? (Y)es or (N)o\t')
@@ -78,15 +78,15 @@ def check_smiles(chemical, chemicals):
             ans = 'Y'
             if ans == 'Y' or ans == 'y':
                 chemicals.update({'_id':chemical['_id']},{'$set':{'SMILES_new':can_smiles_from_name,'checked':True}})
-                print('Recorded smiles changed to: {}'.format(can_smiles_from_name))
+                print(('Recorded smiles changed to: {}'.format(can_smiles_from_name)))
             elif ans == 'N' or ans == 'n':
                 change = None
                 while not change:
-                    change = raw_input('Do you want to manually enter a smiles string? (Y)es or (N)o\t')
+                    change = input('Do you want to manually enter a smiles string? (Y)es or (N)o\t')
                     if change == 'y' or change == 'Y':
-                        new_smiles = raw_input('Pleas type the desired smiles:\t')
+                        new_smiles = input('Pleas type the desired smiles:\t')
                         chemicals.update({'_id':chemical['_id']},{'$set':{'SMILES_new':new_smiles, 'checked':True}})
-                        print('Smiles have been changed to: {}'.format(new_smiles))
+                        print(('Smiles have been changed to: {}'.format(new_smiles)))
                     elif change == 'n' or change == 'N':
                         print('Recorded smiles will be kept.')
                         chemicals.update({'_id':chemical['_id']},{'$set':{'checked':True}})

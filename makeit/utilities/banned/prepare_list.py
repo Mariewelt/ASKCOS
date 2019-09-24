@@ -1,4 +1,4 @@
-import os, sys, json, urllib
+import os, sys, json, urllib.request, urllib.parse, urllib.error
 import rdkit.Chem as Chem 
 from makeit.utilities.io.name_parser import name_to_molecule, urlopen
 
@@ -35,7 +35,7 @@ except:
     pass
 
 # Try to fill in SMILES that are missing automatically
-for (name, smis) in banned.items():
+for (name, smis) in list(banned.items()):
     
     if smis[0] is None: # use NIH resolver
         escaped_name = urllib.parse.quote(name)
@@ -48,7 +48,7 @@ for (name, smis) in banned.items():
                 Chem.MolToSmiles(mol, True),
                 Chem.MolToSmiles(mol, False),
             )
-            print('Parsed {} --> {}'.format(name, banned[name]))
+            print(('Parsed {} --> {}'.format(name, banned[name])))
         except:
             pass
     

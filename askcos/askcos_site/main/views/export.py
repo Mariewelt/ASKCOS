@@ -151,20 +151,20 @@ def export_retro_results(request, _id=1):
         reagent['id'] = num_reagents - reagent['id'] + 1
 
     # Report (for debugging mostly)
-    print('{} bays'.format(len(bays)))
+    print(('{} bays'.format(len(bays))))
     for bay in sorted(bays, key=lambda x:int(x['id'])):
-        print('\nBay ID {:2d}'.format(bay['id']))
-        print('    {:20s}{:20s}'.format('type', bay['type']))
-        print('    {:20s}{:20s}'.format('solvent', bay['reaction_solvent_name']))
-        print('    {:20s}{:20s}'.format('temperature', str(bay['temperature'])))
+        print(('\nBay ID {:2d}'.format(bay['id'])))
+        print(('    {:20s}{:20s}'.format('type', bay['type'])))
+        print(('    {:20s}{:20s}'.format('solvent', bay['reaction_solvent_name'])))
+        print(('    {:20s}{:20s}'.format('temperature', str(bay['temperature']))))
         inlets = ', '.join([str(rgt['id']) for rgt in bay['inlets']])
         if bay['id'] != 1:
             inlets += ', and bay {} outlet'.format(bay['id'] - 1)
-        print('    {:20s}{:20s}'.format('inlets', inlets))
-        print('    {:20s}{:20s}'.format('outlet', bay['outlet']))
-    print('\n{} reagents'.format(len(reagents)))
+        print(('    {:20s}{:20s}'.format('inlets', inlets)))
+        print(('    {:20s}{:20s}'.format('outlet', bay['outlet'])))
+    print(('\n{} reagents'.format(len(reagents))))
     for reagent in sorted(reagents, key=lambda x:int(x['id'])):
-        print('ID {:2d}: {}'.format(reagent['id'], reagent['name']))
+        print(('ID {:2d}: {}'.format(reagent['id'], reagent['name'])))
 
     
 

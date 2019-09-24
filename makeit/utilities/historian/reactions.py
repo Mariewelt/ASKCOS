@@ -184,4 +184,4 @@ if __name__ == '__main__':
     reactionhistorian = ReactionHistorian()
     reactionhistorian.load_from_file()
 
-    print(reactionhistorian.lookup_smiles('CCCCO>>CCCCBr'))
+    print((reactionhistorian.lookup_smiles('CCCCO>>CCCCBr')))

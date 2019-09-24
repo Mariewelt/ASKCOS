@@ -3,7 +3,7 @@ from multiprocessing import Process, Manager, Queue
 from makeit.synthetic.evaluation.evaluator import Evaluator
 import sys 
 if sys.version_info[0] < 3:
-    import Queue as VanillaQueue
+    import queue as VanillaQueue
 else:
     import queue as VanillaQueue
 import time
@@ -256,7 +256,7 @@ class TreeEvaluator():
                     reaction['template_score'], top_result['target']['prob'])
 
                 plausible = self.is_plausible(top_result)
-                print(reaction_smiles, plausible)
+                print((reaction_smiles, plausible))
                 all_children_plausible = True
                 for child in reaction['children']:
                     # TODO: pproperly pass arguments to next evaluate_tree call
@@ -350,7 +350,7 @@ if __name__ == '__main__':
 
     ev = TreeEvaluator(context_recommender=gc.neural_network, celery=False)
     trees = [{'is_chemical': True, 'smiles': 'CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3', 'ppg': 0.0, 'id': 1, 'children': [{'info': '', 'smiles': 'CN1C2CCC1CC(O)C2.O=C(O)C(CO)c1ccccc1>>CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3', 'is_reaction': True, 'num_examples': 19578, 'template_score': 0.017628178000450134, 'children': [
-        {'is_chemical': True, 'smiles': 'CN1C2CCC1CC(O)C2', 'ppg': 1.0, 'id': 3, 'children': []}, {'is_chemical': True, 'smiles': 'O=C(O)C(CO)c1ccccc1', 'ppg': 1.0, 'id': 4, 'children': []}], 'id': 2, 'necessary_reagent': u''}]}]
+        {'is_chemical': True, 'smiles': 'CN1C2CCC1CC(O)C2', 'ppg': 1.0, 'id': 3, 'children': []}, {'is_chemical': True, 'smiles': 'O=C(O)C(CO)c1ccccc1', 'ppg': 1.0, 'id': 4, 'children': []}], 'id': 2, 'necessary_reagent': ''}]}]
     tree = trees[0]
     res = ev.evaluate_tree(tree, gc.neural_network, gc.probability,
                            gc.templatefree, gc.product, is_target=True, reset=True, nproc=2)

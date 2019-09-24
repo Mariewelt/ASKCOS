@@ -7,7 +7,7 @@ class, is used for prioritization. Each worker pre-loads a
 transformer and grabs templates from the database.
 '''
 
-from __future__ import absolute_import, unicode_literals, print_function
+
 from django.conf import settings
 from celery import shared_task
 from celery.signals import celeryd_init

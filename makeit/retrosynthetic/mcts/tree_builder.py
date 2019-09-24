@@ -19,8 +19,8 @@ import makeit.global_config as gc
 import sys
 is_py2 = sys.version[0] == '2'
 if is_py2:
-    import Queue as VanillaQueue
-    import cPickle as pickle
+    import queue as VanillaQueue
+    import pickle as pickle
 else:
     import queue as VanillaQueue
     import pickle as pickle
@@ -289,19 +289,19 @@ class MCTS:
 
             if (int(elapsed_time)//5 == next):
                 next += 1
-                print ("Worked for {}/{} s".format(int(elapsed_time*10)/10.0, self.expansion_time))
-                print ("... current min-price {}".format(self.Chemicals[self.smiles].price))
-                print ("... |C| = {} |R| = {}".format(len(self.Chemicals), len(self.status)))
+                print(("Worked for {}/{} s".format(int(elapsed_time*10)/10.0, self.expansion_time)))
+                print(("... current min-price {}".format(self.Chemicals[self.smiles].price)))
+                print(("... |C| = {} |R| = {}".format(len(self.Chemicals), len(self.status))))
                 for _id in range(self.num_active_pathways):
-                    print('Active pathway {}: {}'.format(_id, self.active_pathways[_id]))
-                print('Active pathway pending? {}'.format(self.active_pathways_pending))
+                    print(('Active pathway {}: {}'.format(_id, self.active_pathways[_id])))
+                print(('Active pathway pending? {}'.format(self.active_pathways_pending)))
 
                 if self.celery:
-                    print('Pending results? {}'.format(len(self.pending_results)))
+                    print(('Pending results? {}'.format(len(self.pending_results))))
                 else:
-                    print('Expansion empty? {}'.format(self.expansion_queue.empty()))
-                    print('results_queue empty? {}'.format(self.results_queue.empty()))    
-                    print('All idle? {}'.format(self.idle))
+                    print(('Expansion empty? {}'.format(self.expansion_queue.empty())))
+                    print(('results_queue empty? {}'.format(self.results_queue.empty())))    
+                    print(('All idle? {}'.format(self.idle)))
 
                 # print(self.expansion_queue.qsize()) # TODO: make this Celery compatible
                 # print(self.results_queue.qsize())
@@ -346,7 +346,7 @@ class MCTS:
 
                     # TODO: check if banned reaction
                     matched_prev = False
-                    for prev_tid, prev_cta in C.template_idx_results.items():
+                    for prev_tid, prev_cta in list(C.template_idx_results.items()):
                         if reactant_smiles in prev_cta.reactions: 
                             prev_R = prev_cta.reactions[reactant_smiles]
                             matched_prev = True
@@ -516,7 +516,7 @@ class MCTS:
                 try:
                     U_sa = c_exploration * C.prob[template_idx] * np.sqrt(product_visits) / (1 + R.visit_count)
                 except:
-                    print(chem_smi, product_visits)
+                    print((chem_smi, product_visits))
                 score = Q_sa + U_sa
                 rxn_scores.append((score, template_idx, reactants_smi))
 
@@ -646,9 +646,9 @@ class MCTS:
                     if R.price < C.price or C.price == -1:
                         C.price = R.price
 
-        if sum(len(CTA.reactions) for tid,CTA in C.template_idx_results.items()) >= self.max_branching:
+        if sum(len(CTA.reactions) for tid,CTA in list(C.template_idx_results.items())) >= self.max_branching:
             # print('{} hit max branching, checking if "done"'.format(chem_smi))
-            C.done = all([(R.done or (not R.valid)) for rsmi,R in CTA.reactions.items() for tid,CTA in C.template_idx_results.items()])
+            C.done = all([(R.done or (not R.valid)) for rsmi,R in list(CTA.reactions.items()) for tid,CTA in list(C.template_idx_results.items())])
 
         # if C.price != -1 and C.price < C.estimate_price:
         #   C.estimate_price = C.price
@@ -693,8 +693,8 @@ class MCTS:
                 # print(prefix + str(R.reactant_smiles) + ' - %d' % R.pathway_count)
 
         C.pathway_count = 0
-        for tid,CTA in C.template_idx_results.items():
-            for rct_smi,R in CTA.reactions.items():
+        for tid,CTA in list(C.template_idx_results.items()):
+            for rct_smi,R in list(CTA.reactions.items()):
                 C.pathway_count += R.pathway_count
 
         # if C.pathway_count != 0:
@@ -749,9 +749,9 @@ class MCTS:
             C = self.Chemicals[self.smiles]
 
         print("Finished working.")
-        print("=== found %d pathways (overcounting duplicate templates)" % C.pathway_count)
-        print("=== time for fist pathway: %.2fs" % self.time_for_first_path)
-        print("=== min price: %.1f" % C.price)
+        print(("=== found %d pathways (overcounting duplicate templates)" % C.pathway_count))
+        print(("=== time for fist pathway: %.2fs" % self.time_for_first_path))
+        print(("=== min price: %.1f" % C.price))
         print("---------------------------")
         return # self.Chemicals, C.pathway_count, self.time_for_first_path
 
@@ -870,10 +870,10 @@ class MCTS:
                 return
 
             done_children_of_this_chemical = []
-            for tid, CTA in C.template_idx_results.items():
+            for tid, CTA in list(C.template_idx_results.items()):
                 if CTA.waiting:
                     continue
-                for rct_smi, R in CTA.reactions.items():
+                for rct_smi, R in list(CTA.reactions.items()):
                     if (not R.valid) or R.price == -1:
                         continue
                     rxn_smiles = '.'.join(sorted(R.reactant_smiles)) + '>>' + chem_smi
@@ -956,7 +956,7 @@ class MCTS:
             else:
                 print('Too many reactants! Only have cases 1-4 programmed')
                 print('There probably are not any real 5 component reactions')
-                print(R.reactant_smiles)
+                print((R.reactant_smiles))
 
 
         MyLogger.print_and_log('Retrieving trees...', treebuilder_loc)
@@ -1061,7 +1061,7 @@ class MCTS:
                 natom_dict[a.GetSymbol()] += 1
             natom_dict['H'] = sum(a.GetTotalNumHs() for a in mol.GetAtoms())
             max_natom_satisfied = all(natom_dict[k] <= v for (
-                k, v) in max_natom_dict.items() if k != 'logic')
+                k, v) in list(max_natom_dict.items()) if k != 'logic')
             return max_natom_satisfied
         def is_popular_enough(hist):
             return hist['as_reactant'] >= min_chemical_history_dict['as_reactant'] or \
@@ -1123,11 +1123,11 @@ if __name__ == '__main__':
     MyLogger.initialize_logFile()
     simulation_time = int(args.simulation_time)
     celery = args.celery in ['true', 'True', True, '1', 1, 'y', 'Y']
-    print('Use celery? {}'.format(celery))
+    print(('Use celery? {}'.format(celery)))
 
     # Load tree builder 
     NCPUS = 4
-    print("There are {} processes available ... ".format(NCPUS))
+    print(("There are {} processes available ... ".format(NCPUS)))
     Tree = MCTS(nproc=NCPUS, mincount=gc.RETRO_TRANSFORMS_CHIRAL['mincount'], 
         mincount_chiral=gc.RETRO_TRANSFORMS_CHIRAL['mincount_chiral'],
         celery=celery)
@@ -1150,7 +1150,7 @@ if __name__ == '__main__':
     print(status)
     for path in paths[:5]:
         print(path)
-    print('Total num paths: {}'.format(len(paths)))
+    print(('Total num paths: {}'.format(len(paths))))
     quit(1)
 
     ####################################################################################
@@ -1170,7 +1170,7 @@ if __name__ == '__main__':
     print(status)
     for path in paths[:5]:
         print(path)
-    print('Total num paths: {}'.format(len(paths)))
+    print(('Total num paths: {}'.format(len(paths))))
     quit(1)
 
     ####################################################################################
@@ -1191,7 +1191,7 @@ if __name__ == '__main__':
                                                 soft_reset=True,
                                                 soft_stop=True)
             if len(paths) > 0:
-                print(paths[0])
+                print((paths[0]))
             pickle.dump((Tree.Chemicals, Tree.time_for_first_path, paths), fid)
 
     ########### STAGE 2 - ANALYZE RESULTS
@@ -1212,9 +1212,9 @@ if __name__ == '__main__':
                 pathway_count.append(len(paths))
                 min_price.append(Chemicals[smiles].price)
 
-        print('After looking at chemical index {}'.format(_id))
-        print('Success ratio: %f (%d/%d)' % (float(success)/total, success, total)  )      
-        print('average time for first pathway: %f' % np.mean(first_time))
-        print('average number of pathways:     %f' % np.mean(pathway_count))
-        print('average minimum price:          %f' % np.mean(min_price))
+        print(('After looking at chemical index {}'.format(_id)))
+        print(('Success ratio: %f (%d/%d)' % (float(success)/total, success, total)  ))      
+        print(('average time for first pathway: %f' % np.mean(first_time)))
+        print(('average number of pathways:     %f' % np.mean(pathway_count)))
+        print(('average minimum price:          %f' % np.mean(min_price)))
     

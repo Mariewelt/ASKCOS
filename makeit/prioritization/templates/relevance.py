@@ -12,6 +12,7 @@ import os
 import makeit.utilities.io.pickle as pickle
 import tensorflow as tf 
 import math
+from functools import reduce
 
 relevance_template_prioritizer_loc = 'relevance_template_prioritizer'
 
@@ -66,7 +67,7 @@ class RelevanceTemplatePrioritizer(Prioritizer):
                 from functools import reduce
                 size_func = lambda v: reduce(lambda x, y: x*y, v.get_shape().as_list())
                 n = sum(size_func(v) for v in tf.trainable_variables())
-                print("Model size: %dK" % (n/1000,))
+                print(("Model size: %dK" % (n/1000,)))
 
                 self.coord = tf.train.Coordinator()
                 with open(gc.Relevance_Prioritization['trained_model_path_{}'.format(self.retro)], 'rb') as fid:
@@ -170,7 +171,7 @@ if __name__ == '__main__':
     smis = ['CCCOCCC', 'CCCNc1ccccc1']
     for smi in smis:
         lst = model.get_topk_from_smi(smi)
-        print('{} -> {}'.format(smi, lst))
+        print(('{} -> {}'.format(smi, lst)))
 
     # model2 = RelevanceTemplatePrioritizer(use_tf=True)
     # model2.load_model()

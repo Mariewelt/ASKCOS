@@ -4,7 +4,7 @@ with atom-mapped reaction SMILES strings and parses them into a new
 collection containing the transforms.
 '''
 
-from __future__ import print_function
+
 from global_config import USE_STEREOCHEMISTRY
 import argparse
 from numpy.random import shuffle # for random selection
@@ -745,7 +745,7 @@ def main(N = 15, skip = 0, skip_id = 0):
 						print('ID: {}'.format(example_doc['_id']))
 						print('rxn_string: {}'.format(rxn_string))
 						print('original: {}'.format(example_doc['RXN_SMILES']))
-						if v: raw_input('Pausing...')
+						if v: input('Pausing...')
 						continue
 					# print('here')
 
@@ -942,7 +942,7 @@ if __name__ == '__main__':
 	ALLOW_CREATE_MASS = args.create_mass in ['y', '1', 'True','Yes', 't', 'T']
 	print('ALLOW CREATE MASS? {}'.format(ALLOW_CREATE_MASS))
 
-	clear = raw_input('Do you want to clear the {} existing templates? '.format(TRANSFORM_DB.find().count()))
+	clear = input('Do you want to clear the {} existing templates? '.format(TRANSFORM_DB.find().count()))
 	if clear in ['y', 'Y', 'yes', '1', 'Yes']:
 		result = TRANSFORM_DB.delete_many({})
 		print('Cleared {} entries from collection'.format(result.deleted_count))

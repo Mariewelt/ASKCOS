@@ -9,7 +9,7 @@ import sys
 from multiprocessing import Queue, Process, Manager
 import sys 
 if sys.version_info[0] < 3:
-    import Queue as VanillaQueue
+    import queue as VanillaQueue
 else:
     import queue as VanillaQueue
 from makeit.interfaces.scorer import Scorer
@@ -202,7 +202,7 @@ class TemplateNeuralNetScorer(Scorer):
             SOLVENT_DB = db[gc.SOLVENTS['collection']]
             for doc in SOLVENT_DB.find():
                 try:
-                    if doc['_id'] == u'default':
+                    if doc['_id'] == 'default':
                         self.solvent_name_to_smiles['default'] = doc['_id']
                     else:
                         self.solvent_name_to_smiles[doc['name']] = doc['_id']
@@ -365,7 +365,7 @@ class TemplateNeuralNetScorer(Scorer):
                     else: # just add probability
                         outcome_dict[outcome_smiles]['prob'] += float(outcome[2])
 
-                all_outcomes.append(sorted(outcome_dict.values(), key=lambda x: x['prob'], reverse=True))
+                all_outcomes.append(sorted(list(outcome_dict.values()), key=lambda x: x['prob'], reverse=True))
 
             return all_outcomes
 
@@ -376,7 +376,7 @@ class TemplateNeuralNetScorer(Scorer):
         rct_temp = Chem.MolFromSmiles(smiles)
         [a.ClearProp('molAtomMapNumber') for a in rct_temp.GetAtoms()]
         split_smiles = Chem.MolToSmiles(rct_temp).split('.')
-        print('SPLIT SMILES FOR GET_CANDIDATE_EDITS: {}'.format(split_smiles))
+        print(('SPLIT SMILES FOR GET_CANDIDATE_EDITS: {}'.format(split_smiles)))
         all_results = []
         is_ready = [i for (i, res) in enumerate(
             self.pending_results) if res.ready()]
@@ -425,7 +425,7 @@ if __name__ == '__main__':
 
     scorer.load(gc.PREDICTOR['trained_model_path'])
     res = scorer.evaluate('CN1C2CCC1CC(O)C2.O=C(O)C(CO)c1ccccc1', [
-                          [80.0, u'', u'', u'', -1, 50.0]], batch_size=100, nproc=8)
+                          [80.0, '', '', '', -1, 50.0]], batch_size=100, nproc=8)
     for re in res[0]:
-        print(re['outcome'].smiles + " {}".format(re['prob']))
+        print((re['outcome'].smiles + " {}".format(re['prob'])))
     print('done')

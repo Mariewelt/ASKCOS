@@ -1,4 +1,4 @@
-from __future__ import absolute_import, unicode_literals, print_function
+
 from django.conf import settings
 from celery import shared_task
 from celery.signals import celeryd_init

@@ -155,7 +155,7 @@ class NNContextRecommender(ContextRecommender):
                 context = self.n_rxn_condition(n, dists=dist, idx=ids[i])
                 contexts.append(context)
             except Exception as e:
-                print('Step {} with an exception: {}'.format(i, e))
+                print(('Step {} with an exception: {}'.format(i, e)))
             
         return contexts
     
@@ -168,9 +168,9 @@ class NNContextRecommender(ContextRecommender):
         :return: A list of reaction conditions [(T, solvent, reagent, catalyst, rxn_time, rxn_yield), ()]
         """
         if n > int(idx.shape[0]):
-            print('More rxn condition options requested than the number of NN, n is set to {}'.format(idx.shape[1]))
+            print(('More rxn condition options requested than the number of NN, n is set to {}'.format(idx.shape[1])))
             if dists[0] > self.dist_limit:
-                print('No neighbor is found within a cosine distance of {}'.format(self.dist_limit))
+                print(('No neighbor is found within a cosine distance of {}'.format(self.dist_limit)))
                 
         contexts = []
         # int_ids = []
@@ -247,7 +247,7 @@ class NNContextRecommender(ContextRecommender):
             for xrn in inst_doc['RXD_RGTXRN']:
                 rgt = self.CHEMICAL_DB.find_one({'_id': xrn})
                 if not rgt:
-                    print('########## COULD NOT FIND REAGENT {} ###########'.format(xrn))
+                    print(('########## COULD NOT FIND REAGENT {} ###########'.format(xrn)))
                     continue
                 smior_name = str(rgt['SMILES'])
                 if (not smior_name) and self.with_smiles:
@@ -263,7 +263,7 @@ class NNContextRecommender(ContextRecommender):
             for xrn in inst_doc['RXD_CATXRN']:
                 cat = self.CHEMICAL_DB.find_one({'_id': xrn})
                 if not cat:
-                    print('########## COULD NOT FIND CATALYST {} ###########'.format(xrn))
+                    print(('########## COULD NOT FIND CATALYST {} ###########'.format(xrn)))
                     continue
                 smior_name = str(cat['SMILES'])
                 if (not smior_name) and self.with_smiles:
@@ -323,4 +323,4 @@ if __name__ == '__main__':
     import global_config as gc
     cont = NNContextRecommender()
     cont.load_nn_model(model_path = gc.CONTEXT_REC['model_path'], info_path = gc.CONTEXT_REC['info_path'])
-    print(cont.get_n_conditions('CN1C2CCC1CC(O)C2.O=C(O)C(CO)c1ccccc1>>CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3', 10))
+    print((cont.get_n_conditions('CN1C2CCC1CC(O)C2.O=C(O)C(CO)c1ccccc1>>CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3', 10)))

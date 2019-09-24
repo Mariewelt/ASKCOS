@@ -49,7 +49,7 @@ class SCScorePrecursorPrioritizer(Prioritizer):
                 fp = AllChem.GetMorganFingerprint(
                     mol, self.FP_rad, useChirality=True)  # uitnsparsevect
                 fp_folded = np.zeros((self.FP_len,), dtype=np.uint8)
-                for k, v in fp.GetNonzeroElements().items():
+                for k, v in list(fp.GetNonzeroElements().items()):
                     fp_folded[k % self.FP_len] += v
                 return np.array(fp_folded)
         else:
@@ -141,7 +141,7 @@ if __name__ == '__main__':
     smis = ['CCCOCCC', 'CCCC']
     for smi in smis:
         sco = model.get_score_from_smiles(smi, noprice=True)
-        print('{} <--- {}'.format(sco, smi))
+        print(('{} <--- {}'.format(sco, smi)))
 
     # model = SCScorer()
     # model.load_model(model_tag='2048bool', FP_len=2048)

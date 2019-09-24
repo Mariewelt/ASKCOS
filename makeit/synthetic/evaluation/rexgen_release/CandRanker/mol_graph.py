@@ -12,7 +12,7 @@ max_nb = 10
 def onek_encoding_unk(x, allowable_set):
     if x not in allowable_set:
         x = allowable_set[-1]
-    return list(map(lambda s: x == s, allowable_set))
+    return list([x == s for s in allowable_set])
 
 def atom_features(atom):
     return np.array(onek_encoding_unk(atom.GetSymbol(), elem_list) 
@@ -130,7 +130,7 @@ def smiles2graph(rsmiles, psmiles, core_bonds, cutoff=500, idxfunc=lambda x:x.Ge
             ring_bonds.add((a1,a2))
 
     #Fix golden label
-    for x,y in gbonds.iterkeys():
+    for x,y in gbonds.keys():
         if x not in tatoms and y not in tatoms and (x,y) in rbonds:
             gbonds[(x,y)] = rbonds[(x,y)]
 

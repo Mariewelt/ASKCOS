@@ -18,7 +18,7 @@ def celery_status(request):
     active = app.control.inspect().active()
     if not stats or not active:
         return status
-    worker_names = stats.keys()
+    worker_names = list(stats.keys())
     for worker in worker_names:
         name, server = worker.split('@')
         if not status.get(name):
@@ -33,7 +33,7 @@ def celery_status(request):
             'busy': status[key]['busy'],
             'available': status[key]['available']
         })
-    for key, val in READABLE_NAMES.items():
+    for key, val in list(READABLE_NAMES.items()):
         if key not in status:
             status_list.append({
                 'name': READABLE_NAMES.get(key),

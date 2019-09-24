@@ -58,7 +58,7 @@ class ChemHistorian:
 
         if not refs:
             file_path += '_no_refs'
-            for k in self.occurrences.keys():
+            for k in list(self.occurrences.keys()):
                 self.occurrences[k] = tuple(self.occurrences[k][0:2])
 
         if compressed:
@@ -115,7 +115,7 @@ class ChemHistorian:
                         try:
                             self.CHEMICAL_HISTORY_DB.insert_one(doc)
                         except Exception as e:
-                            print('#### {}'.format(e))
+                            print(('#### {}'.format(e)))
                             print(doc)
                             failed_docs.append(doc)
                 docs = []
@@ -128,7 +128,7 @@ class ChemHistorian:
                         try:
                             self.CHEMICAL_HISTORY_DB.insert_one(doc)
                         except Exception as e:
-                            print('## {}'.format(e))
+                            print(('## {}'.format(e)))
                             failed_docs.append(doc)
 
         with open('failed_docs.pickle', 'wb') as fid:
@@ -222,7 +222,7 @@ class ChemHistorian:
     def compress_keys(self):
         '''Convert keys to hashed values to save space'''
         new_occurrences = {}
-        for k in self.occurrences.keys():
+        for k in list(self.occurrences.keys()):
             k_compressed = int(hashlib.md5(k.encode('utf-8')).hexdigest(), 16)
             new_occurrences[k_compressed] = self.occurrences[k]
         del self.occurrences
@@ -253,6 +253,6 @@ if __name__ == '__main__':
 
     print('loading no refs, compressed')
     chemhistorian.load_from_file(refs=False, compressed=True)
-    print(chemhistorian.lookup_smiles('CCCCO'))
+    print((chemhistorian.lookup_smiles('CCCCO')))
 
     time.sleep(10)

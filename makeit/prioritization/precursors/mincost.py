@@ -113,4 +113,4 @@ if __name__ == '__main__':
     smis = ['CC(=O)N1C=C(C=C2N=C(N(N=CC3C=CC=CC=3)C(C)=O)N(C(C)=O)C2=O)C2=CC=CC=C21', 'CCCNc1ccccc1']
     for smi in smis:
         sco = model.get_priority(smi)
-        print('{} <--- {}'.format(sco, smi))
+        print(('{} <--- {}'.format(sco, smi)))

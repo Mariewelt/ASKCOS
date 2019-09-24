@@ -79,9 +79,9 @@ def ajax_evaluate_rxnsmiles(request):
 
     # Run
     reactant_smiles = smiles.split('>>')[0]
-    print('Running forward evaluator on {}'.format(reactant_smiles))
+    print(('Running forward evaluator on {}'.format(reactant_smiles)))
     if necessary_reagent:
-        print('Need reagent and reagent suggestion is: {}'.format(contexts[0][2]))
+        print(('Need reagent and reagent suggestion is: {}'.format(contexts[0][2])))
     if necessary_reagent and contexts[0][2] and Chem.MolFromSmiles(contexts[0][2]):
         reactant_smiles += '.{}'.format(contexts[0][2]) # add rgt
     
@@ -107,7 +107,7 @@ def ajax_evaluate_rxnsmiles(request):
             data['html_color'] = str('#%02x%02x%02x' % (int(255), int(0), int(0)))
             return JsonResponse(data)
     plausible = [outcome['target']['prob'] for outcome in all_outcomes]
-    print('All plausibilities: {}'.format(plausible))
+    print(('All plausibilities: {}'.format(plausible)))
     ranks = [outcome['target']['rank'] for outcome in all_outcomes]
     major_prods = [outcome['top_product']['smiles'] for outcome in all_outcomes]
     major_probs = [outcome['top_product']['prob'] for outcome in all_outcomes]
@@ -120,8 +120,8 @@ def ajax_evaluate_rxnsmiles(request):
     major_prob = major_probs[best_context_i]
 
     # Report
-    print('Recommended context(s): {}'.format(best_context))
-    print('Plausibility: {}'.format(plausible))
+    print(('Recommended context(s): {}'.format(best_context)))
+    print(('Plausibility: {}'.format(plausible)))
     # print(all_outcomes[best_context_i])
 
     if num_contexts:

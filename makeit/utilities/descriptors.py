@@ -15,7 +15,7 @@ def oneHotVector(val, lst):
 	'''Converts a value to a one-hot vector based on options in lst'''
 	if val not in lst:
 		val = lst[-1]
-	return list(map(lambda x: x == val, lst))
+	return list([x == val for x in lst])
 
 def rxn_level_descriptors(rxn):
 	'''

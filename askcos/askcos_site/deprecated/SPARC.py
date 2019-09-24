@@ -108,7 +108,7 @@ def opt_cond(tgtArry, conds, idx=0, maxi=True):
     n_err = 0
     for c, cond in enumerate(conds):
         if cond.shape[0] != ts[c]:
-            print('Condition {} provided mismatches the corresponding dimension of the tgtArray'.format(c))
+            print(('Condition {} provided mismatches the corresponding dimension of the tgtArray'.format(c)))
             n_err += 1
             break
     if n_err > 0:
@@ -126,7 +126,7 @@ def opt_cond(tgtArry, conds, idx=0, maxi=True):
                 opt_conds.append(cond[loc[c]].tolist())
             return opt_conds
         except Exception as e:
-            print('Condition {} has en exception {}'.format(c, e))
+            print(('Condition {} has en exception {}'.format(c, e)))
 
 
 def opt_cond_requested(f_org_list=None, p_org_list=None, p_aqu_list=None,
@@ -376,7 +376,7 @@ def sep_at_different_pH(org, aqu, molecules=[], c_org=[], c_aqu=[], flowRatio_oa
         except Exception as e:
             tot_mol = 0
             print(e)
-            print('Missing initial concentration? set tot_mol = 0 for mol {}: {}'.format(i, molecules[i]))
+            print(('Missing initial concentration? set tot_mol = 0 for mol {}: {}'.format(i, molecules[i])))
 
         for j in range(n_pHPts):
             f_aqu = v_aqu / (v_aqu + v_org * (10 ** logD_list[i,j]))
@@ -713,11 +713,11 @@ class SeparationDesigner():
                     c_aqu = find_in_list(c_aqu_list)
                     p_org = find_in_list(p_org_list)
                     p_aqu = find_in_list(p_aqu_list)
-                print('At pH {}'.format(pH))
-                print('molecule\t' + 'logD\t' + 'f_org\t' + 'f_aqu\t' + 'c_org\t' + 'c_aqu\t' + 'p_org\t' + 'p_aqu')
+                print(('At pH {}'.format(pH)))
+                print(('molecule\t' + 'logD\t' + 'f_org\t' + 'f_aqu\t' + 'c_org\t' + 'c_aqu\t' + 'p_org\t' + 'p_aqu'))
                 for m, mol in enumerate(mol_list):
-                    print('{}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}'.format(
-                        mol, logD[m], f_org[m], 1-f_org[m], c_org[m], c_aqu[m], p_org[m], p_aqu[m]))
+                    print(('{}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}'.format(
+                        mol, logD[m], f_org[m], 1-f_org[m], c_org[m], c_aqu[m], p_org[m], p_aqu[m])))
             else:
                 return fd, fo, fa, po, pa, pHlist, logD_list, f_org_list, c_org_list, c_aqu_list, p_org_list, p_aqu_list
                 # Figure objects: logD, fraction_org, fraction_aqu, purity_org, purity_aqu

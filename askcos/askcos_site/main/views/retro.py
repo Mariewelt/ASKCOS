@@ -32,7 +32,7 @@ from askcos_site.askcos_celery.treebuilder.tb_coordinator_mcts import get_buyabl
 
 with open(gc.BAN_LIST_PATH) as f:
     ban_list = json.load(f)
-BANNED_SMILES = [smi for sublist in ban_list.values() for smi in sublist if smi is not None]
+BANNED_SMILES = [smi for sublist in list(ban_list.values()) for smi in sublist if smi is not None]
 BANNED_SMILES = [
     Chem.MolToSmiles(
         Chem.MolFromSmiles(smi), True
@@ -315,10 +315,10 @@ def ajax_start_retro_celery(request):
         'as_reactant': min_chempop_reactants,
         'as_product': min_chempop_products,
     }
-    print('Tree building {} for user {} ({} forbidden reactions)'.format(
-        smiles, request.user, len(blacklisted_reactions)))
-    print('Using chemical property logic: {}'.format(max_natom_dict))
-    print('Using chemical popularity logic: {}'.format(min_chemical_history_dict))
+    print(('Tree building {} for user {} ({} forbidden reactions)'.format(
+        smiles, request.user, len(blacklisted_reactions))))
+    print(('Using chemical property logic: {}'.format(max_natom_dict)))
+    print(('Using chemical popularity logic: {}'.format(min_chemical_history_dict)))
 
     res = get_buyable_paths.delay(smiles, template_prioritization, precursor_prioritization,
                                   mincount=retro_mincount, max_branching=max_branching, max_depth=max_depth,
@@ -335,7 +335,7 @@ def ajax_start_retro_celery(request):
     (num_chemicals, num_reactions, at_depth) = tree_status
     data['html_stats'] = 'After expanding (with {} banned reactions, {} banned chemicals), {} total chemicals and {} total reactions'.format(
         len(blacklisted_reactions), len(forbidden_molecules), num_chemicals, num_reactions)
-    for (depth, count) in sorted(at_depth.items(), key=lambda x: x[0]):
+    for (depth, count) in sorted(list(at_depth.items()), key=lambda x: x[0]):
         label = 'Could not format label...?'
         if int(float(depth)) == float(depth):
             label = 'chemicals'
@@ -352,8 +352,8 @@ def ajax_start_retro_celery(request):
 
     # Save to session in case user wants to export
     request.session['last_retro_interactive'] = trees
-    print('Saved {} trees to {} session'.format(
-        len(trees), request.user.get_username()))
+    print(('Saved {} trees to {} session'.format(
+        len(trees), request.user.get_username())))
 
     return JsonResponse(data)
 
@@ -409,11 +409,11 @@ def ajax_start_retro_mcts_celery(request):
         'as_reactant': min_chempop_reactants,
         'as_product': min_chempop_products,
     }
-    print('Tree building {} for user {} ({} forbidden reactions)'.format(
-        smiles, request.user.id, len(blacklisted_reactions)))
-    print('Using chemical property logic: {}'.format(max_natom_dict))
-    print('Using chemical popularity logic: {}'.format(min_chemical_history_dict))
-    print('Returning as soon as any pathway found? {}'.format(return_first))
+    print(('Tree building {} for user {} ({} forbidden reactions)'.format(
+        smiles, request.user.id, len(blacklisted_reactions))))
+    print(('Using chemical property logic: {}'.format(max_natom_dict)))
+    print(('Using chemical popularity logic: {}'.format(min_chemical_history_dict)))
+    print(('Returning as soon as any pathway found? {}'.format(return_first)))
 
     res = get_buyable_paths_mcts.delay(smiles, max_branching=max_branching, max_depth=max_depth,
                                   max_ppg=max_ppg, expansion_time=expansion_time, max_trees=500,

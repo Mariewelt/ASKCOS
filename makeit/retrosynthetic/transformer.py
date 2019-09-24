@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 
 import makeit.global_config as gc
 import os, sys
@@ -130,7 +130,7 @@ class RetroTransformer(TemplateTransformer):
         with open(gc.BAN_LIST_PATH) as f:
             ban_list = json.load(f)
         # flatten list of lists, filtering out None
-        self.banned_smiles = [smi for sublist in ban_list.values() for smi in sublist if smi is not None]
+        self.banned_smiles = [smi for sublist in list(ban_list.values()) for smi in sublist if smi is not None]
         # canonicalize
         self.banned_smiles = [
             Chem.MolToSmiles(

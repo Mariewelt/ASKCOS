@@ -12,6 +12,7 @@ from keras import backend as K
 import makeit.global_config as gc
 from makeit.utilities.io.logger import MyLogger
 import os
+import imp
 fast_filter_loc = 'fast_filter'
 
 
@@ -22,7 +23,7 @@ class FastFilterScorer(Scorer):
     def set_keras_backend(self, backend):
         if K.backend() != backend:
             os.environ['KERAS_BACKEND'] = backend
-            reload(K)
+            imp.reload(K)
             assert K.backend() == backend
 
     def load(self, model_path):

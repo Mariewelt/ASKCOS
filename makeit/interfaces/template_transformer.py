@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import makeit.global_config as gc
 import rdkit.Chem as Chem
 from rdkit.Chem import AllChem

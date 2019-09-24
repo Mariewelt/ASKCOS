@@ -9,7 +9,8 @@ services:
       - './uwsgi_params:/etc/nginx/uwsgi_params'
       - 'staticdata:/static'
     ports:
-      - '80:80'
+      - '5000:5000'
+    user: root
 
   app:
     image: askcos

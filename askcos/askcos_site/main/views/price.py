@@ -27,9 +27,9 @@ def ajax_price_smiles(request):
     smiles = request.GET.get('smiles', None)
     data = {'err': False, 'smiles': smiles}
     isomericSmiles = json.loads(request.GET.get('isomericSmiles', 'false'))
-    print('isomericSmiles: {}'.format(isomericSmiles))
+    print(('isomericSmiles: {}'.format(isomericSmiles)))
     data['ppg'] = Pricer.lookup_smiles(smiles, alreadyCanonical=False, isomericSmiles=isomericSmiles)
-    print('Result: {}'.format(data['ppg']))
+    print(('Result: {}'.format(data['ppg'])))
     data['buyable'] = data['ppg'] != 0.
     if data['ppg'] == 0.:
         data['html'] = 'This chemical is <b>not</b> in our database currently'

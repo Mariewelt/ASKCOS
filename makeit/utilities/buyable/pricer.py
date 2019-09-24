@@ -145,5 +145,5 @@ class Pricer:
 if __name__ == '__main__':
     pricer = Pricer()
     pricer.load()
-    print(pricer.lookup_smiles('CCCCCO'))
-    print(pricer.lookup_smiles('CCCCXCCO'))
+    print((pricer.lookup_smiles('CCCCCO')))
+    print((pricer.lookup_smiles('CCCCXCCO')))
